@@ -1,0 +1,8 @@
+{
+    "Id": 71063202,
+    "PostTypeId": 1,
+    "Title": "check valid date in java",
+    "Body": "I tried to check a String input that is a valid date using the format dd/MM/yyyy like this:\nString input = Scanner.nextLine();\nDateTimeFormatter formater = DateTimeFormatter.ofPattern(\"dd/MM/yyyy\");\ntry{\n    LocaleDate.parse(input, formater);\n}\ncatch(Exception e)\n\nBut it can't check some rules below:\nLeap year, February 29 days.\n\nCommon year, February 28 days.\n\nMonth 1, 3, 5, 7, 8, 10, 12, max 31 days.\n\nMonth 4, 6, 9, 11, max 30 days.\n\nWhen I use input = \"30/02/2022\", it's legal.\nI use netbeans 8.2 and jdk 1.8. Do they support some methods for checking these rules?\n",
+    "AcceptedAnswerId": 71063276,
+    "AcceptedAnswer": "There are two things you need to change in your formatter:\n\nUse uuuu instead of yyyy. It's easy to try the latter, but y means \"year within ERA\". It doesn't know whether it's BC or AD. u means \"year\" including ERA information.\nThe default resolver style is SMART. Use .withResolverStyle(ResolverStyle.STRICT) to return a strict copy of the formatter.\n\n"
+}
